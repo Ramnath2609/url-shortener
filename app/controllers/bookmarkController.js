@@ -35,6 +35,41 @@ module.exports.create = (req, res) => {
     }
 }
 
+module.exports.showName = (req, res) =>{
+    const name = req.params.name
+    Bookmark.find({tags : name})
+        .then(bookmark => {
+            res.json(bookmark)
+        })
+        .catch(err => {
+            res.json(err)
+        })
+}
+
+
+module.exports.showQuery = (req, res) => {
+    console.log(req.query)
+    const names = req.query.names.split(',')
+    Bookmark.find({tags : {"$in" : names}})
+        .then(bookmarks => {
+            res.json(bookmarks)
+        })
+}
+
+module.exports.showHash = (req, res) => {
+    const hashValue = req.params.hash
+    Bookmark.find({hashed_url : hashValue})
+        .then(bookmark => {
+            if (bookmark) {
+                console.log(bookmark)
+                res.redirect(bookmark[0].original_url)
+            }
+        })
+        .catch(err => {
+            res.json(err)
+        })
+}
+
 module.exports.show = (req, res) => {
     const id = req.params.id
     Bookmark.findById(id)
