@@ -1,6 +1,5 @@
 const Bookmark = require('../models/bookmark')
-const validator = require('validator')
-const sh = require('shorthash')
+
 
 
 module.exports.list = (req, res) => {
@@ -17,8 +16,6 @@ module.exports.list = (req, res) => {
 
 module.exports.create = (req, res) => {
     const bookmark = new Bookmark(req.body)
-    if (validator.isURL(bookmark.original_url)) {
-        bookmark.hashed_url= sh.unique(bookmark.original_url)
         bookmark.save()
         .then(bookmark => {
             if (bookmark) {
@@ -28,11 +25,7 @@ module.exports.create = (req, res) => {
         .catch(err => {
             res.json(err)
         })
-    } else {
-        res.json({
-            note : "URL must be provided"
-        })
-    }
+   
 }
 
 module.exports.showName = (req, res) =>{
