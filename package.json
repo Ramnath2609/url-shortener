@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.8.10",
+    "mongoose": "^5.12.14",
     "shorthash": "0.0.2",
     "validator": "^12.2.0"
   }
